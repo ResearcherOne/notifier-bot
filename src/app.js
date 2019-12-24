@@ -1,17 +1,17 @@
-const Telegraf = require('telegraf');
-const telegram = require('telegraf/telegram')
-
 const config = require("./config.js");
+const Telegraf = require('telegraf');
 
 const helpText = "You need to be assigned by the server-side software to be able to receive notifications. Please contact admin.";
 
 const bot = new Telegraf(config.TELEGRAM_SECRET_TOKEN);
 
-
 function notifyUsers(message) {
     const IDList = config.TELEGRAM_ID_LIST_TO_BE_NOTIFIED;
     IDList.forEach(ID => {
-        bot.telegram.sendMessage(ID, message)
+        bot.telegram.sendMessage(ID, message).catch(function(err){
+            console.log("ERR")
+            console.log(err)
+        })
     });
 }
 
@@ -32,6 +32,6 @@ bot.command(command, function(ctx){
 
 bot.on('message', function(ctx){
     ctx.reply('Oops, this is not a command. Get help by typing /help')
-    notifyUsers(bot, "OMG-OMG-OMG")
+    notifyUsers("OMG")
 })
 bot.launch()
