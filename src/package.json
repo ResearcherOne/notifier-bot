@@ -1,0 +1,29 @@
+{
+  "name": "notifier-bot",
+  "version": "0.0.0",
+  "description": "telegram based notifier bot",
+  "main": "notifier-bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ResearcherOne/notifier-bot.git"
+  },
+  "keywords": [
+    "telegram",
+    "notify",
+    "notifier",
+    "telegraf"
+  ],
+  "author": "birkan kolcu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ResearcherOne/notifier-bot/issues"
+  },
+  "homepage": "https://github.com/ResearcherOne/notifier-bot#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "telegraf": "^3.34.1"
+  }
+}
