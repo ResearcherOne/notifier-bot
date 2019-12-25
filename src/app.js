@@ -1,37 +1,8 @@
 const config = require("./config.js");
-const Telegraf = require('telegraf');
+const NotifierBot = require('./NotifierBot.js');
 
-const helpText = "You need to be assigned by the server-side software to be able to receive notifications. Please contact admin.";
+const notifierBot = new NotifierBot(config.TELEGRAM_SECRET_TOKEN, config.TELEGRAM_ID_LIST_TO_BE_NOTIFIED, config.TELEGRAM_HELP_TEXT);
 
-const bot = new Telegraf(config.TELEGRAM_SECRET_TOKEN);
-
-function notifyUsers(message) {
-    const IDList = config.TELEGRAM_ID_LIST_TO_BE_NOTIFIED;
-    IDList.forEach(ID => {
-        bot.telegram.sendMessage(ID, message).catch(function(err){
-            console.log("ERR")
-            console.log(err)
-        })
-    });
-}
-
-
-bot.start((ctx) => ctx.reply('Welcome to notifier bot! '+helpText))
-bot.help((ctx) => ctx.reply(helpText))
-
-const command = "/myid";
-bot.command(command, function(ctx){
-    const receivedText = ctx.message.text;
-    const receivedTitle = receivedText.substring(command.length+1);
-
-    const userID = ctx.message.from.id;
-    const chatID = ctx.chat.id;
-
-    ctx.reply("Your id is "+userID+" and your chat id is "+chatID);
-})
-
-bot.on('message', function(ctx){
-    ctx.reply('Oops, this is not a command. Get help by typing /help')
-    notifyUsers("OMG")
-})
-bot.launch()
+setTimeout(() => {
+    notifierBot.notifyUsers("YO YO YO YO");
+}, 5000);
