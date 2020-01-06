@@ -3,6 +3,7 @@ const Telegraf = require('telegraf');
 var NotifierBot = function (telegramToken, telegramIDList, helpText) {
     this._telegramToken = telegramToken;
     this._telegramIDList = telegramIDList;
+    this._errorHandlerCallback = null;
 
     this._helpText = helpText;
     this._bot = new Telegraf(telegramToken);
@@ -26,12 +27,20 @@ var NotifierBot = function (telegramToken, telegramIDList, helpText) {
 
 NotifierBot.prototype.notifyUsers = function (message) {
     const IDList = this._telegramIDList;
+    const self = this;
     IDList.forEach(ID => {
         this._bot.telegram.sendMessage(ID, message).catch(function(err){
-            console.log("ERR")
-            console.log(err)
+            if(self._errorHandlerCallback) {
+                self._errorHandlerCallback(err)
+            } else {
+                console.log("Error handler is not set.")
+            }
         })
     });
+}
+
+NotifierBot.prototype.setErrorHandler = function (callback) {
+    this._errorHandlerCallback = callback;
 }
 
 module.exports = NotifierBot;
